@@ -6,8 +6,7 @@
         <div id="navbar" class="naviga_bar container-fluid">
             <nav :class="{ 'onScroll': !view.topOfPage}" class="navbar fixed-top navbar-expand-lg">
                 <div style="" class="container-fluid">
-                    <a style="font-size: 25px; font-weight: 600; color: white;
-  text-shadow: 2px 2px 4px #000000;"  class="navbar-brand" href="#">Belmaz Credit</a>
+                    <a style="font-size: 25px; font-weight: 600; color: white; text-shadow: 2px 2px 4px #000000;"  class="navbar-brand" href="#">Belmaz Credit</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -107,7 +106,7 @@
             </div>
             <div class="pt-8 pb-10 ml-0 pl-0 container">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <!-- <div class="col-lg-3">
                         <v-hover v-slot="{ hover }" open-delay="200">
                             <v-card :elevation="hover ? 16 : 2" :class="{ 'on-hover': hover }" width="400">
                                 <v-img height="200px" width="100%" src="../../assets/service6.svg"></v-img>
@@ -122,8 +121,8 @@
                                 
                             </v-card>
                         </v-hover>
-                    </div>
-                    <div class="col-lg-3">
+                    </div> -->
+                    <div class="col-lg-4">
                         <v-hover v-slot="{ hover }" open-delay="200">
                             <v-card :elevation="hover ? 16 : 2" :class="{ 'on-hover': hover }" width="400">
                                 <v-img height="200px" width="100%" src="../../assets/serviceTwo.svg"></v-img>
@@ -132,14 +131,14 @@
                                     <h4 class="font-weight-bold mb-2">
                                         Loan
                                     </h4>
-                                    <p class="pt-5">Get every loan on <br>affordable rate (20%)</p>
+                                    <p class="pt-5">Get every loan on <br>affordable rate (5%)</p>
                                 </v-card-text>
                                 <v-divider></v-divider>
                                 
                             </v-card>
                         </v-hover>
                     </div>
-                    <div class="col-lg-3" >
+                    <div class="col-lg-4" >
                         <v-hover v-slot="{ hover }" open-delay="200">
                             <v-card :elevation="hover ? 16 : 2" :class="{ 'on-hover': hover }" width="400">
                                 <v-img height="200px" width="100%" src="../../assets/service3.svg"></v-img>
@@ -155,7 +154,7 @@
                             </v-card>
                         </v-hover>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <v-hover v-slot="{ hover }" open-delay="200">
                             <v-card :elevation="hover ? 16 : 2" :class="{ 'on-hover': hover }" width="400">
                                 <v-img height="200px" width="100%" src="../../assets/service4.svg"></v-img>
@@ -641,8 +640,19 @@ e.	Access to business platform for young businesses within our society<br/>
             <div class="mt-10 row">
                 <div class="col-lg-3">
                     <div class="other_pages">
-                        <h4>Belmaz Credit</h4>
-                        <p>Belmaz Credit is a finacial empowerment investment firm in collaboration with Multipurpose Cooporative Society Limited .</p>
+                        <h4>Social Media</h4>
+                         <div class="mt-8">
+                            <a href="#" class="tweet_icon2 mr-6">
+                                <span><i class="fab fa-facebook-f"></i></span>
+                            </a>
+                            <a href="#" class="tweet_icon mr-6">
+                                <span><i class="fab fa-twitter"></i></span>
+                            </a>
+                            <a href="#" class="tweet_icon3 mr-6">
+                                <span><i class="fab fa-google"></i></span>
+                            </a>
+                        </div>
+                        <p></p>
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -669,33 +679,33 @@ e.	Access to business platform for young businesses within our society<br/>
                     <div class="other_pages">
                         <h4 class="ml-4">Contact Info</h4>
                         <ul>
-                            <li><span style="margin-right: 10px; color: #FC8009"><i class="fas fa-map-marker-alt"></i></span>Enugu, Nigeria</li>
+                            <!-- <li><span style="margin-right: 10px; color: #FC8009"><i class="fas fa-map-marker-alt"></i></span>Enugu, Nigeria</li> -->
                             <li><span style="margin-right: 10px; color: #FC8009"><i class="fas fa-envelope"></i></span>info@belmazcredit.com</li>
                             <!-- <li><span style="margin-right: 10px; color: #FC8009"><i class="fas fa-phone-alt"></i></span>+ 234 806 944 9137</li> -->
                         </ul>
-                        <div class="mt-8">
-                            <a href="#" class="tweet_icon2 mr-6">
-                                <span><i class="fab fa-facebook-f"></i></span>
-                            </a>
-                            <a href="#" class="tweet_icon mr-6">
-                                <span><i class="fab fa-twitter"></i></span>
-                            </a>
-                            <a href="#" class="tweet_icon3 mr-6">
-                                <span><i class="fab fa-google"></i></span>
-                            </a>
-                        </div>
+                       
                     </div>
                 </div>
                 <center>Belmaz Credit is Powered by Belmaz Multi Purpose Cooperative Society</center>
             </div>
-              <!--Div where the WhatsApp will be rendered-->   
-            <div id="WAButton"></div>  
+              
         </div>
+        <div id="script"> </div>
     </div>
 </div>
 </template>
 
 <script>
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/62299050a34c2456412a54ba/1ftp5nfpc';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+
 export default {
     data: () => ({
         view: {
@@ -717,17 +727,12 @@ export default {
         }
     },
 }
+
 </script>
 
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap');
-
-@media (max-width: 1000px) {
-    img {
-        display: none;
-    }
-}
 
 .navbar-toggler-icon {
   background-image: url('../../assets/icon.png');
@@ -1007,7 +1012,7 @@ export default {
 
 .blog_news {
     padding-top: 3rem;
-    padding-left: 2rem;
+    padding-left: -20rem;
     padding-right: 2rem;
     // padding-bottom:1rem;
 
@@ -1558,6 +1563,8 @@ export default {
         text-decoration: none;
         color: #fff;
         font-size: 18px;
+        background-color: #DB4437;
+        margin-left: 10px;
     }
 }
 

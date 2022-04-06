@@ -4,7 +4,7 @@ import axios from "axios";
 // SECURE AXIOS
 export const newAxios = axios.create({
  //baseURL: process.env.VUE_APP_API_URL,
- // baseURL: 'http://127.0.0.1:8000/api',
+  //baseURL: 'http://127.0.0.1:8000/api',
   baseURL: 'https://backend.belmazcredit.com/api',
   headers: {
     "Content-Type": "application/json",

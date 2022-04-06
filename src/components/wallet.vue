@@ -69,6 +69,15 @@
                     {{ formatMoney(item.withdrawal) }}
                 </div>
                 </template>
+                 <template v-slot:item.action="{item }">
+                    <div v-if="item.withdrawal == null"> 
+                        
+                    </div>
+                    <div v-else>
+                        <v-btn style="color:green" v-if="item.status == 1" @click="toogleStatus(item.uid)" text > Approved</v-btn>
+                        <v-btn style="color:red" text v-else-if="item.status == 0" @click="toogleStatus(item.uid)" > Pending Approval</v-btn>
+                    </div>
+                </template>
                 <template v-slot:item.date="{item}">
                 <div>
                     {{ item.date }}
@@ -122,11 +131,18 @@
                 value: 'withdrawal',
                 class: "orange lighten-5"
             },
+             {
+                text: 'Withdrawal Status',
+                value: 'action',
+              class: "orange lighten-5"
+                
+            },
             {
                 text: 'Date',
                 value: 'date',
                 class: "orange lighten-5"
             },
+            
             {
                 text: '',
                 value: 'edit',
@@ -188,6 +204,7 @@
                     wallet_amount:  el.wallet_amount,
                     withdrawal:  el.withdrawal,
                     date:  el.created_at,
+                    status:  el.withdrawal_status,
                 }
             )
             

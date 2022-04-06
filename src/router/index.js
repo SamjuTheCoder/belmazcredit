@@ -36,6 +36,7 @@ import bank from '../components/bankdetails.vue'
 import signup from '../components/emailpage.vue'
 import contributeFund from '../components/contribute-fund.vue'
 import viewcontributions from '../components/all-contributed-fund.vue'
+import confirmwithdrawal from '../components/confirmWithdrawal.vue'
 
 Vue.use(VueRouter);
 
@@ -105,7 +106,7 @@ const routes = [
 
   },
   {
-    path:"/reset-password/:resetlink",
+    path:"/reset-password",
     name:"resetPassword",
     component:resetPassword,
     meta: {
@@ -278,15 +279,6 @@ const routes = [
           secure:true,
         }
       },
-
-      {
-        path:"/my-wallet",
-        name:"wallet",
-        component:wallet,
-        meta: {
-          secure:true,
-        }
-      },
       {
         path:"/apply-loan",
         name:"myloan",
@@ -332,6 +324,14 @@ const routes = [
         path:"/list-contributors",
         name:"contributors",
         component:contributors,
+        meta: {
+          secure:true,
+        }
+      },
+      {
+        path:"/withdrawals",
+        name:"confirmwithdrawal",
+        component:confirmwithdrawal,
         meta: {
           secure:true,
         }

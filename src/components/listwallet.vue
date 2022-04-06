@@ -5,7 +5,7 @@
             <v-data-table :headers="headers" :items="indexSn" class="elevation-1">
                 <template v-slot:top>
                     <v-toolbar flat>
-                        <v-toolbar-title>Transactions</v-toolbar-title>
+                        <v-toolbar-title>Wallet Transactions</v-toolbar-title>
                         <v-divider class="mx-4" inset vertical></v-divider>
                         <v-spacer></v-spacer>
                         <!-- <v-dialog v-model="dialog" max-width="500px">
@@ -90,19 +90,20 @@
                 </div>
                 </template>
 
-                <!-- <template v-slot:item.status="{item}">
-                <div v-if="item.status == 0">
-                    <span class="text-danger"> Pending Approval </span>
+                <template v-slot:item.date="{item}">
+                <div>
+                    {{ item.date }}
                 </div>
-                 <div v-else-if="item.status == 1">
-                     <span class="text-green">Approved</span>
-                </div>
-                </template> -->
+                </template>
                
                 <template v-slot:item.action="{item }">
-                    <v-icon small class="mr-2">
-                        mdi-dots-horizontal
-                    </v-icon>
+                    <div v-if="item.withdrawal == null"> 
+                        
+                    </div>
+                    <div v-else>
+                        <v-btn style="color:green" v-if="item.status == 1" @click="toogleStatus(item.uid)" text > Approved</v-btn>
+                        <v-btn style="color:red" text v-else-if="item.status == 0" @click="toogleStatus(item.uid)" > Pending Approval</v-btn>
+                    </div>
                 </template>
                 <!-- <template v-slot:no-data>
                     <v-btn color="primary" @click="initialize">
@@ -136,7 +137,7 @@ export default {
                 text: 'S/N',
                 align: 'start',
                 sortable: false,
-                value: 'sn',
+                value: 'uid',
                 class: "orange lighten-5"
             },
             {
@@ -164,16 +165,11 @@ export default {
                 value: 'withdrawal',
                 class: "orange lighten-5"
             },
-            //  {
-            //     text: 'Investment Limit',
-            //     value: 'investmentlimit',
-            //     class: "orange lighten-5"
-            // },
-            //  {
-            //     text: 'Status',
-            //     value: 'status',
-            //     class: "orange lighten-5"
-            // },
+            {
+                text: 'Date',
+                value: 'date',
+                class: "orange lighten-5"
+            },
             {
                 text: 'Action',
                 value: 'action',
@@ -192,21 +188,25 @@ export default {
         editedIndex: -1,
         editedItem: {
             sn: [],
+            uid: '', 
             name: '',
             referralid: '',
             earningtype: '',
             walletamount: '',
             withdrawal: '',
+            date:'',
             action: '',
             edit: '...',
         },
         defaultItem: {
             sn: [],
+            uid: '', 
             name: '',
             referralid: '',
             earningtype: '',
             walletamount: '',
             withdrawal: '',
+            date:'',
             action: '',
             edit: '',
         },
@@ -262,7 +262,46 @@ export default {
                 this.editedIndex = -1
             })
         },
-        
+    
+     async toogleStatus(uid){
+            try {
+                const url = "/confirm-withdrawal";
+                const resp = await this.$http.post(url, {
+                    uid
+                })
+                console.log({uid})
+                // TODO check if resp is successful
+
+                // change the status from the front
+                 if (resp.data.code == '00') {
+                    const success_message = resp.data.message;
+                      const success_status = resp.data.status;
+                    swal.fire({
+                        icon: 'success',
+                        title: success_status,
+                        text: success_message,
+                    });
+                } else {
+                    const error_message = resp.data.message;
+                    swal.fire({
+                        icon: 'Error',
+                        title: 'error',
+                        text: error_message,
+                    });
+                }
+               
+                this.desserts = this.desserts.map(d => {
+                    console.log();
+                    if (d.uid == uid) {
+                        return {...d, status: d.status == 1? 0: 1}
+                    }
+                    return d
+                })
+
+            } catch (error) {
+                
+            }
+        },
 
 async listContributors(){
     try{
@@ -274,12 +313,14 @@ async listContributors(){
                 
             this.desserts.push(
                 {
-                    id: el.uid,         
+                    uid: el.uid,         
                     name: el.name,
                     referralid:  el.referral_id,
                     earningtype: el.earning_type,
                     walletamount: el.wallet_amount,
-                    withdrawal: el.withdrawal
+                    withdrawal: el.withdrawal,
+                    date:  el.created_at,
+                    status: el.withdrawal_status
 
                 }
             )

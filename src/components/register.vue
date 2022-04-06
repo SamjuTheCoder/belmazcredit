@@ -24,7 +24,7 @@
                              <p></p>
                              <b-form-input v-model="phone" type="phone" placeholder="Enter your phone number"></b-form-input>
                              <p></p>
-                             <b-form-input v-model="sponsor_id" type="sponsor_id" placeholder="Enter your sponsor id (Optional)"></b-form-input>
+                             <b-form-input v-model="sponsor_id" type="sponsor_id" placeholder="Enter your sponsor id" required></b-form-input>
                              <p></p>
                              <b-form-input v-model="transaction_code" type="transaction_code" placeholder="Enter transaction code"></b-form-input>
                              <p></p>
@@ -69,23 +69,32 @@ export default {
 
     methods: {
         async rest() {
-            if (!this.name || !this.email || !this.phone || !this.password || !this.transaction_code) {
-                swal.fire({
-                    icon: 'warning',
-                    title: 'Error...',
-                    text: 'Please enter all the information ',
-                })
-                return;
-            }
 
-            if (this.password != this.password_confirmation) {
-                swal.fire({
-                    icon: 'warning',
-                    title: 'Error...',
-                    text: 'Password does not match ',
-                })
-                return;
-            }
+               if (!this.name || !this.email || !this.phone || !this.password || !this.transaction_code) {
+                  swal.fire({
+                     icon: 'warning',
+                     title: 'Error...',
+                     text: 'Please enter all the information ',
+                  })
+                  return;
+               }
+             if (!this.sponsor_id) {
+                  swal.fire({
+                     icon: 'warning',
+                     title: 'Error...',
+                     text: 'Please enter sponsor id ',
+                  })
+                  return;
+               }
+
+               if (this.password != this.password_confirmation) {
+                  swal.fire({
+                     icon: 'warning',
+                     title: 'Error...',
+                     text: 'Password does not match ',
+                  })
+                  return;
+               }
 
             try {
                 const response = await this.$http.post('/register', {

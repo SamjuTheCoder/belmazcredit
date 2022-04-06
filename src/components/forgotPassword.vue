@@ -1,147 +1,165 @@
 <template>
-<b-contanier fluid>
-    <div class="cont">
-        <div class="cont1 position-relative">
-            <div class="position-absolute bottom-0 start-50 translate-middle-x">
-                <div class="logo_wrap">
-                    <div class="circ p-3"><img src="logo.svg" alt=""></div>
+  <div id="app">
 
-                    <div class="main p-4">
-                        <form ref="form" lazy-validation @submit.prevent="submit">
-                            <b-row>
-                              
-                                <b-col class="col-12 mt-4">
-                                    <div>
-                                        <h5> <strong>Forgot Password</strong></h5>
-                                       
-                                    </div>
-                                    <div style="color:#bcbcbc">
-                                        <h6>Reset Your Password!</h6>
-                                    </div>
-                                </b-col>
-                                <b-col class="col-12">
-                                    <div>
-                                        <b-form-input v-model="email" type="email" placeholder="Enter email adress" required></b-form-input>
-                                    </div>
-                                </b-col>
-                                
-                                <b-col class="col-12">
-                                    <div>
-                                        <b-button v-b-modal.modal-multi-1 style="background: #20618c; display:block; color: #fff; width: 100%" size="lg" @click="submit" type="submit">Submit</b-button>
-                                    </div>
-                                </b-col>
+   <div class="login-page">
+      <transition name="fade">
+         <div class="wallpaper-login"></div>
+      </transition>
+      <div class="wallpaper-register"></div>
 
-                            </b-row>
-                        </form>
-                    </div>
-                </div>
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
+               <div  class="card login">
+                  <p style="text-align:justify">Please enter your email address to reset your password </p>
+                  <p></p>
+                  <form class="form-group" lazy-validation @submit.prevent="reset">
+                     <b-form-input v-model="email" type="email" class="form-control" placeholder="Your valid email address" required></b-form-input>
+                     <p></p>
+                     <input type="submit"  style="background: #685500c; color: #fff; width: 100%" class="btn btn-primary" value="Submit"  @click="reset">
+                     <p></p>
+                     <p>Already have an account? <a href="/login">Login</a> | <a href="/">Home Page</a>
+                     </p>
+                   
+                  </form>
+               </div>
 
             </div>
-        </div>
-        <div class="img" style="width:100%;">
+         </div>
 
-            <img src="./../../public/Group 5762.png" style="width:100%; height:100%"></div>
+      </div>
+   </div>
 
-    </div>
-</b-contanier>
+</div>
+
+  <!-- Material form login -->
 </template>
-<style scoped>
-.cont {
-    background: #cadbee;
-    width: 100%;
-    height: 100%;
-
-}
-
-.cont1 {
-    background: #cadbee;
-    width: 100%;
-    height: 70%;
-
-}
-
-.circ {
-    position: absolute;
-    top: -25%;
-    left: 50%;
-    transform: translate(-50%, 25%);
-    width: 100px;
-    height: 100px;
-    border: 4px solid #fff;
-    border-radius: 80%;
-    background: #fff;
-}
-
-.img {
-    width: 100%;
-    height: 30%;
-}
-
-.main {
-    padding-top: 10px;
-    background: #fff;
-    max-width: 500px;
-    border-radius: 9px;
-  
-
-}
-
-.logo_wrap {
-    position: relative;
-
-}
-</style>
 
 <script>
 import swal from 'sweetalert2';
+//import axios from 'axios';
+
 export default {
     data: () => ({
         email: '',
     }),
-    methods: {
+    // mounted(){
+    //     localStorage.removeItem("wertyuiojhdfghhdrtfyguh")
+    // },
 
-async submit() {
-      if (this.email == '') {
+    methods: {
+        async reset() {
+            if (!this.email) {
                 swal.fire({
                     icon: 'warning',
-                    title: 'Error !!!',
-                    text: 'Please provide your email address.',
-
+                    title: 'Error...',
+                    text: 'Please enter your email address ',
                 })
                 return;
             }
-            //  if (this.newpass !== this.confirmpass) {
-            //     swal.fire({
-            //         icon: 'warning',
-            //         title: 'Error !!!',
-            //         text: 'Password not the same',
 
-            //     })
-            //     return;
-            //     }
-                 try {
-                const response = await this.$http.post('/auth/forgot-password', {
+            try {
+                const response = await this.$http.post('/forgot-password', {
                     email: this.email,
                 });
 
                 console.log(response);
+                //let token = response.data.data.token;
+                //await localStorage.setItem("wertyuiojhdfghhdrtfyguh", token)
+                
+                const response_code = response.data.code;
+                if ( response_code == 'E201' ) {
 
-                const success_status = response.data.status;
-                const success_message = response.data.message;
+                    swal.fire({
+                    icon: 'error',
+                    title: response.data.message,
+                    //text: 'Kindly Proceed',
+                    });
 
-                 swal.fire({
-                icon: 'success',
-                title: success_status,
-                text: success_message,
+                } else if ( response_code == '00' ){
 
-            })
-            this.$router.push('/');
-              
+                swal.fire({
+                    icon: 'success',
+                    title: response.data.message,
+                    //text: 'Kindly Proceed',
+                });
+               this.$router.push('/');
+                }
+
             } catch (err) {
-                console.log(err);
-            }
-        },
+                //console.log(err);
 
+                swal.fire({
+                    icon: 'error',
+                    title: response.message,
+                    //text: 'Kindly Proceed',
+                });
+            }
+        
+            
+        }
     }
 }
 </script>
+<style scoped>
+
+p {
+   line-height: 1rem;
+}
+
+.card {
+   padding: 20px;
+}
+
+.form-group {
+   input {
+      margin-bottom: 20px;
+   }
+}
+
+.login-page {
+   align-items: center;
+   display: flex;
+   height: 100vh;
+   background-color:#f1d2cf;
+}
+   
+   
+   .wallpaper-register {
+      background-color: #f1d2cf;
+      background-size: cover;
+      height: 100%;
+      position: absolute;
+      width: 100%;
+      z-index: -1;
+   }
+
+   h1 {
+      margin-bottom: 1.5rem;
+   }
+
+
+.error {
+   animation-name: errorShake;
+   animation-duration: 0.3s;
+}
+
+@keyframes errorShake {
+   0% {
+      transform: translateX(-25px);
+   }
+   25% {
+      transform: translateX(25px);
+   }
+   50% {
+      transform: translateX(-25px);
+   }
+   75% {
+      transform: translateX(25px);
+   }
+   100% {
+      transform: translateX(0);
+   }
+}
+</style>
+

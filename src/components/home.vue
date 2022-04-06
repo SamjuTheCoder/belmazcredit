@@ -63,7 +63,8 @@
       items: [
           
           { title: 'Dashboard',icon: 'mdi-shield-account', to: '/admin', role: '3' },
-          { title: 'Transactions',icon: 'mdi-clipboard-text', to: '/list-transactions',role: '1' },
+          { title: 'Wallet Transactions',icon: 'mdi-clipboard-text', to: '/list-transactions',role: '1' },
+          { title: 'Withdrawals',icon: 'mdi-clipboard-text', to: '/withdrawals',role: '1' },
           { title: 'Contributors',icon: 'mdi-clipboard-text', to: '/list-contributors',role: '1' },
           { title: 'View Contributions',icon: 'mdi-clipboard-text', to: '/view-contributions',role: '1' },
           { title: 'Investment',icon: 'mdi-clipboard-text', to: '/list-investments',role: '1' },

@@ -26,10 +26,8 @@
                      <input type="submit" style="background: #685500c; color: #fff; width: 100%" value="Login" class="btn btn-primary" @click="rest">
                      
                      <p></p>
-                     <p>Don't have an account? <a href="/signup">Signup</a> | <a href="/">Home Page</a>
-                     
-                     </p>
-                   
+                     <p>Don't have an account? <a href="/signup">Signup</a> | <a href="/">Home Page</a></p>
+                     <p>Forgot password? <a href="/forgot-password">Click here</a></p>
                   </form>
                </div>
 

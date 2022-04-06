@@ -1,164 +1,211 @@
+
 <template>
-<b-contanier fluid>
-    <div class="cont">
-        <div class="cont1 position-relative">
-            <div class="position-absolute bottom-0 start-50 translate-middle-x">
-                <div class="logo_wrap">
-                    <div class="circ p-3"><img src="logo.svg" alt=""></div>
 
-                    <div class="main p-4">
-                        <form ref="form" lazy-validation @submit.prevent="submit">
-                            <b-row>
-                              
-                                <b-col class="col-12 mt-4">
-                                    <div>
-                                        <h5> <strong>Reset Password</strong></h5>
-                                       
-                                    </div>
-                                    <div style="color:#bcbcbc">
-                                        <h6>Creat Your New Password!</h6>
-                                    </div>
-                                </b-col>
-                                <b-col class="col-12">
-                                    <div>
-                                        <b-form-input v-model="npassword" type="password" placeholder="New Password"></b-form-input>
-                                    </div>
-                                </b-col>
-                                <b-col class="col-12">
-                                    <div>
-                                        <b-form-input v-model="cpassword" type="password" placeholder="Confrim Password"></b-form-input>
-                                    </div>
-                                </b-col>
-                                <b-col class="col-12">
-                                    <div>
-                                        <b-button v-b-modal.modal-multi-1 style="background: #20618c; display:block; color: #fff; width: 100%" size="lg" @click="submit" type="submit">Continue</b-button>
-                                    </div>
-                                </b-col>
+  <div id="app">
 
-                            </b-row>
-                        </form>
-                    </div>
+   <div class="login-page">
+      <transition name="fade">
+         
+      </transition>
+      <div class="wallpaper-register"></div>
+
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
+               <div  class="card login">
+                <div>
+                        <h5>Enter yout new passwrod {{ message }}</h5>
                 </div>
+                 
+                  <p></p>
+                  <form class="form-group" lazy-validation @submit.prevent="rest">
+                      <b-form-input v-model="reset_code" type="text" class="form-control" placeholder="Password reset code" required></b-form-input>
+                     <p></p> 
+                     <b-form-input v-model="password" type="password" class="form-control" placeholder="Password" required></b-form-input>
+                     <p></p> 
+                     <b-form-input v-model="password_confirmation" type="password" class="form-control" placeholder="Confirm password" required></b-form-input>
+                     <p></p>
+                     <input type="submit" style="background: #685500c; color: #fff; width: 100%" value="Reset" class="btn btn-primary" @click="rest">
+                     
+                     <p></p>
+                     <p>Don't have an account? <a href="/signup">Signup</a> | <a href="/login">Login</a> | <a href="/">Home Page</a></p>
+                  </form>
+               </div>
 
             </div>
-        </div>
-        <div class="img" style="width:100%;">
+         </div>
 
-            <img src="./../../public/Group 5762.png" style="width:100%; height:100%"></div>
+      </div>
+   </div>
 
-    </div>
-</b-contanier>
+</div>
+    
 </template>
-<style scoped>
-.cont {
-    background: #cadbee;
-    width: 100%;
-    height: 100%;
 
-}
-
-.cont1 {
-    background: #cadbee;
-    width: 100%;
-    height: 70%;
-
-}
-
-.circ {
-    position: absolute;
-    top: -25%;
-    left: 50%;
-    transform: translate(-50%, 25%);
-    width: 100px;
-    height: 100px;
-    border: 4px solid #fff;
-    border-radius: 80%;
-    background: #fff;
-}
-
-.img {
-    width: 100%;
-    height: 30%;
-}
-
-.main {
-    padding-top: 10px;
-    background: #fff;
-    max-width: 500px;
-    border-radius: 9px;
-  
-
-}
-
-.logo_wrap {
-    position: relative;
-
-}
-</style>
 
 <script>
 import swal from 'sweetalert2';
+//import axios from 'axios';
+
 export default {
     data: () => ({
-        resetlink: '',
-        npassword: '',
-        cpassword: ''
+        email: '',
+        password: '',
+        user_role: '',
+        error_code :'',
+        message:'',
+        status:''
     }),
-
-    mounted() {
-        this.code = this.$route.params.resetlink;
-        console.log(this.resetlink)
-
+    mounted(){
+        localStorage.removeItem("wertyuiojhdfghhdrtfyguh")
     },
 
     methods: {
+        async rest() {
 
-    async submit() {
-        
-      if (!this.npassword || !this.cpassword) {
+              if (!this.reset_code) {
+               
                 swal.fire({
                     icon: 'warning',
-                    title: 'Error !!!',
-                    text: 'Please complete the space...',
+                    title: 'Error...',
+                    text: 'Please enter your password reset code ',
+                })
+                return;
 
+            }
+
+            if (!this.password || !this.password_confirmation) {
+               
+                swal.fire({
+                    icon: 'warning',
+                    title: 'Error...',
+                    text: 'All fields must be entered ',
+                })
+                return;
+
+            }else if (this.password !=this.password_confirmation) {
+               
+                swal.fire({
+                    icon: 'warning',
+                    title: 'Error...',
+                    text: 'Password does not match  ',
                 })
                 return;
             }
-             if (this.newpass !== this.confirmpass) {
-                swal.fire({
-                    icon: 'warning',
-                    title: 'Error !!!',
-                    text: 'Password not the same',
 
-                })
-                return;
-                }
-                 try {
-                const response = await this.$http.post('/auth/reset-password', {
-                    password_reset_link: this.resetlink,
-                    password: this.npassword,
-                    confirm_Password:this.cpassword,
-
+            try {
+                const response = await this.$http.post('/reset-password', {
+                    password_reset_code: this.reset_code,
+                    password: this.password,
                 });
 
                 console.log(response);
 
-                const success_status = response.data.status;
-                const success_message = response.data.message;
+                let token = response.data.data.token;
+                await localStorage.setItem("wertyuiojhdfghhdrtfyguh", token)
+                
+                this.error_code = response.data.code;
+                this.message = response.data.message;
+                
+                if(this.error_code == "00") {
 
-                 swal.fire({
-                icon: 'success',
-                title: success_status,
-                text: success_message,
+                     swal.fire({
+                     icon: 'success',
+                     title: message,
+                     width:400,
 
-            })
-            this.$router.push('/');
-              
+                     });
+                     
+                     this.$router.push('/login');
+
+               }else if(this.error_code == "E003") {
+
+                     swal.fire({
+                     icon: 'error',
+                     title: message,
+                     width:400,
+
+                     });
+                     
+                     this.$router.push('/login');
+
+               }
+            
+            
+
             } catch (err) {
-                console.log(err);
-            }
-},
+                //console.log(err);
 
+                swal.fire({
+                    icon: 'error',
+                    title: response.data.message,
+                    //text: 'Kindly Proceed',
+                });
+            }
+        
+            
+        }
     }
 }
 </script>
+<style scoped>
+
+p {
+   line-height: 1rem;
+}
+
+.card {
+   padding: 20px;
+}
+
+.form-group {
+   input {
+      margin-bottom: 20px;
+   }
+}
+
+.login-page {
+   align-items: center;
+   display: flex;
+   height: 100vh;
+   background-color: #f1d2cf;
+}
+   
+   .wallpaper-register {
+      background-color: #f1d2cf;
+      background-size: cover;
+      height: 100%;
+      position: absolute;
+      width: 100%;
+      z-index: -1;
+   }
+
+   h1 {
+      margin-bottom: 1.5rem;
+   }
+
+
+.error {
+   animation-name: errorShake;
+   animation-duration: 0.3s;
+}
+
+@keyframes errorShake {
+   0% {
+      transform: translateX(-25px);
+   }
+   25% {
+      transform: translateX(25px);
+   }
+   50% {
+      transform: translateX(-25px);
+   }
+   75% {
+      transform: translateX(25px);
+   }
+   100% {
+      transform: translateX(0);
+   }
+}
+</style>
+
